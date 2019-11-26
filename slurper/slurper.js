@@ -1,9 +1,10 @@
 const leboncoin = require('leboncoin-api')
 const fs = require('fs')
+const path = "./to_process/"
 
 executeSearch(getSearch(1))
 
-function getSearch(page) {    
+function getSearch(page) {
     return new leboncoin.Search()
         .setPage(page)
         .setCategory("ventes_immobilieres")
@@ -15,13 +16,13 @@ function getSearch(page) {
 }
 
 function executeSearch(search) {
-    search.run().then(function (data) {        
+    search.run().then(function (data) {
         data.results.forEach(element => {
-            fs.writeFile("./to_process/" + element.id, JSON.stringify(element), function (err) {
+            fs.writeFile(path + element.id, JSON.stringify(element), function (err) {
                 if (err) {
-                    console.log("FAILED TO SAVE " + element.link);
+                    console.log("FAILED TO SAVE " + element.link + " assuming that's the last new one");
+                    return
                 }
-                console.log(element.id + " was saved");
             })
         })
         if (data.nbResult != 0)
