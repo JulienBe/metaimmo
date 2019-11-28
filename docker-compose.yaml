@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  db:
+    image: "postgres"
+    container_name: "metaimmodb"
+    environment:
+      - POSTGRES_USER=gloubiboulga
+      - POSTGRES_PASSWORD=Volvo240
+      - POSTGRES_DB=metaimmo
+      - PGDATA=immodb
+    ports:
+      - "54321:5432"
+    volumes:
+      - ./db-data:/var/lib/postgresql/immodb:Z
+      - ./create_table.sql:/create_table.sql
