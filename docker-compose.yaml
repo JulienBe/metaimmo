@@ -12,4 +12,13 @@ services:
       - "54321:5432"
     volumes:
       - ./db-data:/var/lib/postgresql/immodb:Z
-      - ./create_table.sql:/create_table.sql
+      - ./create_tables.sql:/create_tables.sql
+      - ./drop_tables.sql:/drop_tables.sql
+  expose_db:
+    image: postgrest/postgrest
+    container_name: postgrest
+    environment:
+      - PGRST_DB_URI=postgres://gloubiboulga:Volvo240@db/metaimmo
+      - PGRST_DB_ANON_ROLE=gloubiboulga
+    ports:
+      - "30000:3000"
